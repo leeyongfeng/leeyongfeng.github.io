@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI在身边 · 老年人科技生活指南</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== Apple Design DNA ===== */
+/* - SF-like display hierarchy (huge headline, tight tracking, shallow subhead, dark text) */
+/* - Off-white canvas (#fafafa), not pure white */
+/* - Deep dominance: 90% content is black/white/text, 10% accent color */
+/* - Generous leading, raggedy not neat */
+/* - Cards sit on colored bands, not alone */
+/* - Simple fade animation */
+/* - Section heights measured in vw */
+
+:root {
+  --cream: #F5F5F0;
+  --dark: #1A1A1A;
+  --dark-soft: #333333;
+  --muted: #86868B;
+  --light-band: #F0EDE8;
+  --accent-warm: #CC4E3C;
+  --accent-warm2: #E07B5A;
+  --accent-gold: #C9A84C;
+  --accent-green: #3D7A4A;
+  --radius: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--cream);
+  color: var(--dark);
+  -webkit-font-smoothing: antialiased;
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ===== Utility ===== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; }
+.container { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+@media(max-width: 768px) { .container { padding: 0 20px; } }
+.fade-up { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ===== Sticky Nav ===== */
+.nav {
+  position: fixed; top:0; left:0; right:0; z-index:999;
+  background: rgba(245,245,240,.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  transition: background .3s;
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: center; gap: 2px;
+  max-width: 1080px; margin: 0 auto; padding: 0 40px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display:none; }
+.nav-inner a {
+  display: block; padding: 15px 14px;
+  font-size: 13px; font-weight: 500; letter-spacing: .02em;
+  color: var(--muted); text-decoration: none;
+  white-space: nowrap; border-radius: 6px;
+  transition: color .2s;
+}
+.nav-inner a:hover { color: var(--dark); }
+@media(max-width: 768px) { .nav-inner { padding: 0 20px; } }
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 110vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 140px 40px 100px;
+  position: relative; overflow: hidden;
+  background: var(--cream);
+}
+.hero::after {
+  content: '';
+  position: absolute; bottom: -1px; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.08) 20%, rgba(0,0,0,.12) 50%, rgba(0,0,0,.08) 80%, transparent 100%);
+}
+.hero-eyebrow {
+  font-size: 14px; font-weight: 500; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: clamp(52px, 7.5vw, 96px);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  margin-bottom: 28px;
+  max-width: 880px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent-warm);
+}
+.hero-sub {
+  font-size: clamp(18px, 2.5vw, 22px);
+  color: var(--dark-soft);
+  max-width: 600px; margin: 0 auto;
+  line-height: 1.75;
+  font-weight: 300;
+}
+.hero-scroll {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  animation: scrollHint 2.2s ease-in-out infinite;
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+@keyframes scrollHint {
+  0%,100% { transform: translateX(-50%) translateY(0); opacity:.5; }
+  50% { transform: translateX(-50%) translateY(6px); opacity:1; }
+}
+
+/* ===== Dark Band ===== */
+.band-dark {
+  background: var(--dark);
+  color: white; padding: 100px 0;
+  text-align: center;
+}
+
+/* ===== Section Headlines ===== */
+.section-eyebrow {
+  font-size: 13px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -.025em;
+}
+.section-sub {
+  font-size: 17px; color: var(--dark-soft);
+  margin-top: 16px; font-weight: 300; line-height: 1.7;
+  max-width: 520px;
+}
+
+/* ===== Feature Cards Bento Grid ===== */
+.cases-section {
+  padding: 120px 0;
+}
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 52px;
+}
+@media(max-width: 900px) { .bento { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 560px) { .bento { grid-template-columns: 1fr; } }
+
+.bento-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  cursor: default;
+  transition: transform .4s ease;
+}
+.bento-card:hover { transform: scale(1.012); }
+.bento-card.span2 { grid-column: span 2; }
+@media(max-width: 560px) { .bento-card.span2 { grid-column: span 1; } }
+
+.bento-img {
+  width: 100%; height: 260px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.bento-card.span2 .bento-img { height: 320px; }
+.bento-body { padding: 28px 28px 32px; }
+.bento-tag {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 50px;
+  margin-bottom: 12px;
+}
+.bento-body h3 {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.bento-body p {
+  font-size: 15px; color: var(--dark-soft);
+  font-weight: 300; line-height: 1.75;
+}
+
+/* Card themes */
+.bento-card.warm .bento-img { background: linear-gradient(160deg, #fbeae4, #f5c9b8); }
+.bento-card.warm .bento-tag { background: rgba(204,78,60,.1); color: var(--accent-warm); }
+.bento-card.green .bento-img { background: linear-gradient(160deg, #eaf4ec, #c8e8d0); }
+.bento-card.green .bento-tag { background: rgba(61,122,74,.1); color: var(--accent-green); }
+.bento-card.gold .bento-img { background: linear-gradient(160deg, #fdf3dc, #f0d9a0); }
+.bento-card.gold .bento-tag { background: rgba(201,168,76,.15); color: #8B6914; }
+.bento-card.blue .bento-img { background: linear-gradient(160deg, #eaeff7, #c5daf0); }
+.bento-card.blue .bento-tag { background: rgba(56,120,200,.1); color: #3878C8; }
+.bento-card.soft .bento-img { background: linear-gradient(160deg, #f0efec, #ddd8d0); }
+.bento-card.soft .bento-tag { background: rgba(100,100,100,.1); color: var(--muted); }
+.bento-card.dark-card { background: var(--dark); }
+.bento-card.dark-card .bento-body { color: white; }
+.bento-card.dark-card .bento-body p { color: rgba(255,255,255,.6); }
+.bento-card.dark-card .bento-body h3 { color: white; }
+
+/* ===== Statistics Strip ===== */
+.stats-strip {
+  background: var(--dark);
+  color: white;
+  padding: 80px 0;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.stat-item {
+  background: var(--dark);
+  padding: 52px 36px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: 56px; font-weight: 900;
+  letter-spacing: -.03em;
+  line-height: 1;
+  color: var(--accent-warm2);
+  display: block;
+}
+.stat-label {
+  font-size: 15px; color: rgba(255,255,255,.55);
+  margin-top: 10px; font-weight: 300;
+}
+@media(max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+
+/* ===== Quote Band ===== */
+.quote-band {
+  background: linear-gradient(160deg, var(--light-band) 0%, var(--cream) 100%);
+  border-top: 1px solid rgba(0,0,0,.06);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.quote-inner {
+  max-width: 780px; margin: 0 auto; padding: 120px 40px;
+  text-align: center;
+}
+.quote-text {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  font-size: clamp(24px, 3.5vw, 40px);
+  line-height: 1.45; font-weight: 400;
+  letter-spacing: -.01em;
+}
+.quote-text em {
+  font-style: italic;
+  color: var(--accent-warm);
+}
+.quote-attr {
+  font-size: 15px; color: var(--muted); margin-top: 28px;
+  font-weight: 400;
+}
+
+/* Dark-section banned colors — everything must be bright on dark */
+.band-dark .section-eyebrow { color: rgba(255,255,255,.35); }
+.band-dark .section-sub     { color: rgba(255,255,255,.7); }
+.band-dark .product-tag     { color: var(--accent-warm2); }
+.band-dark .product-text h3 { color: #fff; }
+.band-dark .product-text p  { color: rgba(255,255,255,.85); }
+/* sibling dark block that holds the product rows */
+#why-learn > div:last-child .product-text h3 { color: #fff; }
+#why-learn > div:last-child .product-text p  { color: rgba(255,255,255,.85); }
+.band-dark .product-panel   { color: rgba(255,255,255,.65); }
+
+
+/* ===== Precautions - Split Layout ===== */
+.precautions { padding: 120px 0; }
+.prec-header { margin-bottom: 60px; }
+.warning-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 48px;
+}
+@media(max-width:720px) { .warning-cards { grid-template-columns: 1fr; } }
+
+.wc {
+  background: white;
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.04);
+  border: 1px solid rgba(0,0,0,.05);
+}
+.wc-icon { font-size: 36px; margin-bottom: 16px; }
+.wc h4 { font-size: 20px; font-weight: 600; margin-bottom: 10px; font-family: 'Noto Serif SC', serif; }
+.wc p { font-size: 15px; color: var(--dark-soft); line-height: 1.85; font-weight: 300; }
+
+/* ===== Timeline ===== */
+.timeline { padding: 120px 0; background: white; }
+.tl-wrap {
+  position: relative;
+  padding-left: 52px;
+}
+.tl-wrap::before {
+  content: '';
+  position: absolute; left: 18px; top: 8px; bottom: 8px;
+  width: 2px; background: rgba(0,0,0,.08);
+}
+.tl-item {
+  position: relative; padding: 0 0 48px;
+}
+.tl-item:last-child { padding-bottom: 0; }
+.tl-dot {
+  position: absolute; left: -38px; top: 8px;
+  width: 18px; height: 18px;
+  background: var(--accent-warm);
+  border-radius: 50%; border: 4px solid white;
+  box-shadow: 0 0 0 2px var(--accent-warm);
+}
+.tl-num {
+  font-size: 57px; font-weight: 900;
+  font-family: 'Noto Serif SC', serif;
+  color: rgba(0,0,0,.06);
+  line-height: 1; letter-spacing: -.04em;
+}
+.tl-item h3 {
+  font-size: 22px; font-weight: 700;
+  margin: -6px 0 10px;
+  font-family: 'Noto Serif SC', serif;
+}
+.tl-item p { font-size: 16px; color: var(--dark-soft); font-weight: 300; line-height: 1.8; }
+
+/* ===== FAQ ===== */
+.faq-section { padding: 120px 0; }
+.faq-list { margin-top: 52px; }
+.faq-item {
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 0; cursor: pointer;
+  font-size: 18px; font-weight: 500;
+  font-family: 'Noto Serif SC', serif;
+  user-select: none;
+  transition: color .2s;
+}
+.faq-q:hover { color: var(--accent-warm); }
+.faq-q::after {
+  content: ''; width: 12px; height: 12px;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(-45deg);
+  flex-shrink: 0; margin-left: 12px;
+  transition: transform .3s;
+}
+.faq-item.open .faq-q::after { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden;
+  transition: max-height .4s ease, padding .3s ease;
+  padding: 0 0 0;
+}
+.faq-item.open .faq-a { max-height: 400px; padding-bottom: 28px; }
+.faq-a p {
+  font-size: 16px; color: var(--dark-soft);
+  line-height: 1.9; font-weight: 300;
+}
+
+/* ===== Footer ===== */
+footer {
+  background: var(--dark);
+  color: rgba(255,255,255,.45);
+  text-align: center;
+  padding: 48px 24px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+footer strong { color: rgba(255,255,255,.8); font-weight: 600; }
+
+/* ===== Mobile Nav Spacer ===== */
+.spacer { height: 52px; }
+
+/* ===== Apple-style Product Card (Horizontal) ===== */
+.product-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+  margin: 36px 0;
+}
+@media(max-width: 700px) { .product-row { grid-template-columns: 1fr; } }
+.product-text { padding: 28px 0; }
+.product-text h3 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 28px; font-weight: 700;
+  line-height: 1.25; margin-bottom: 10px;
+}
+.product-tag {
+  font-size: 13px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px; display: block;
+}
+.product-text p { font-size: 16px; color: var(--dark-soft); font-weight: 300; line-height: 1.75; }
+.product-visual {
+  border-radius: var(--radius);
+  min-height: 280px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 90px;
+  position: relative;
+  overflow: hidden;
+}
+</style>
+</head>
+<body>
+
+<!-- Sticky Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#hero">首页</a>
+    <a href="#real-stories">老年人正在用AI</a>
+    <a href="#which-ai">AI是什么 · 能干什么</a>
+    <a href="#why-learn">为什么学AI</a>
+    <a href="#safety">安全须知</a>
+    <a href="#how-start">零起点起步</a>
+    <a href="#faq">常见问答</a>
+    <a href="#tutorial1">AI入门教程</a>
+  </div>
+</nav>
+<div class="spacer"></div>
+
+<!-- ======== HERO ======== -->
+<section class="hero" id="hero">
+  <div class="hero-eyebrow fade-up">科技让晚年生活更精彩</div>
+  <h1 class="fade-up" style="transition-delay:.1s">AI<em>就在</em>身边</h1>
+  <p class="hero-sub fade-up" style="transition-delay:.2s">
+    人工智能不是冰冷的科技概念。<br>
+    它就在邻居王阿姨的画里，在李叔叔的体检报告上，在爷爷奶奶的老照片里。
+  </p>
+  <div class="hero-scroll fade-up" style="transition-delay:.5s">
+    <span>向下探索</span>
+    <span style="font-size:20px;line-height:1">↓</span>
+  </div>
+</section>
+
+<!-- ======== SECTION 1: 老年人正在用AI ======== -->
+<section class="cases-section" id="real-stories">
+  <div class="container">
+    <div class="section-eyebrow fade-up">真实故事</div>
+    <h2 class="section-title fade-up">他们，正在用AI</h2>
+    <p class="section-sub fade-up">
+      这不是未来图景。下面这些人，都在用AI做真实的事。
+    </p>
+
+    <div class="bento">
+
+      <!-- Card 1: 老照片修复 - Span 2 -->
+      <div class="bento-card warm span2 fade-up">
+        <div class="bento-img">🖼️</div>
+        <div class="bento-body">
+          <span class="bento-tag">情感 · AI修复</span>
+          <h3>王阿姨，72岁，AI修复了40张老照片</h3>
+          <p>
+            "我儿子在外地工作，我把年轻时候和爱人的结婚照发给了一个AI工具，它帮我<em>去噪点、补裂纹、把黑白变彩色</em>，还生成了动态视频。
+            我拿着修复的照片去社区茶话会，每个老姐妹都羡慕得不行。以前觉得AI是年轻人的玩意儿，现在觉得它是<em>帮我把青春留住</em>的人。"
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2: 健康助手 -->
+      <div class="bento-card green fade-up" style="transition-delay:.1s">
+        <div class="bento-img">💊</div>
+        <div class="bento-body">
+          <span class="bento-tag">健康 · AI助手</span>
+          <h3>李叔治好了体检报告恐惧症</h3>
+          <p>
+            "以前去医院体检，拿回报告查半天也看不懂那些缩写术语。现在我让AI<em>逐条给我翻译</em>，
+            哪项超标了、要注意什么生活调整，一清二楚。"
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3: AI诗友 -->
+      <div class="bento-card gold fade-up" style="transition-delay:.15s">
+        <div class="bento-img">📝</div>
+        <div class="bento-body">
+          <span class="bento-tag">文艺 · AI写诗</span>
+          <h3>张老师，68岁，AI诗友每天一首</h3>
+          <p>
+            "过去在诗社里定了秋游的主题，叫AI给我写了3首七言，我选了一首改了两句，发群里，
+            所有人都夸我宝刀未老。其实我知道，<em>是AI给了我底气。</em>"
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 4: 旅游规划 - dark card -->
+      <div class="bento-card dark-card span2 fade-up" style="transition-delay:.05s">
+        <div class="bento-img" style="color:white;font-size:60px">🗺️</div>
+        <div class="bento-body">
+          <span class="bento-tag" style="background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)">生活 · AI规划</span>
+          <h3>陈阿姨的三人港澳行，AI全程定好</h3>
+          <p>
+            68岁的陈阿姨想去港澳旅游，但怕做攻略太累。她把想去的时间、两名老姐妹的名字和预算发给AI，
+            AI帮她把<em>机票、酒店、路线、签证材料、必打卡景点清单</em>全整理好，她现在每天按计划走，
+            每天在朋友圈晒图，成了小区里有名的旅游达人。
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 5: 语音翻译 -->
+      <div class="bento-card blue fade-up" style="transition-delay:.2s">
+        <div class="bento-img">🌍</div>
+        <div class="bento-body">
+          <span class="bento-tag">无障碍 · AI翻译</span>
+          <h3>去国外探亲，AI当同声传译</h3>
+          <p>
+            "在国外旅行，AI <em>实时把路人的话、餐馆菜单</em>翻成中文读给我听，
+            我根本不用学英语，跟当地人聊天也不耽误。"
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 6: 手机教孙子 -->
+      <div class="bento-card soft fade-up" style="transition-delay:.25s">
+        <div class="bento-img">👶</div>
+        <div class="bento-body">
+          <span class="bento-tag">家庭 · AI互动</span>
+          <h3>赵爷爷成了孙子的AI老师</h3>
+          <p>
+            "孙子问我手机游戏的人物是谁，我让AI查了一下，日语典故和历史背景都告诉他了。
+            现在孙子<em>反过来向我请教</em>，有史以来第一次！"
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======== DATA STRIP ======== -->
+<div class="stats-strip">
+  <div class="container">
+    <div class="stats-grid fade-up">
+      <div class="stat-item">
+        <span class="stat-num">2.9亿</span>
+        <div class="stat-label">中国60岁以上人口（2024）<br>一场规模空前的老龄化浪潮</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">65%</span>
+        <div class="stat-label">一线城市60+人群已接入互联网<br>智能手机覆盖率持续攀升</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3亿+</span>
+        <div class="stat-label">国内AI工具活跃用户数<br>越来越多老年人成为用户</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== SECTION 2: AI是什么 ======== -->
+<section id="which-ai">
+  <div class="container" style="padding: 140px 40px">
+    <div class="section-eyebrow fade-up">您可能听说过</div>
+    <h2 class="section-title fade-up">AI到底是什么？<br><em style="font-size:.65em;font-weight:400;color:var(--muted)">一个比喻就够了</em></h2>
+  </div>
+</section>
+
+<section style="padding-bottom: 120px">
+  <div class="container">
+    <div class="quote-band" style="border-radius: var(--radius); margin: 0 40px; max-width: calc(1080px - 80px)">
+      <div class="quote-inner fade-up">
+        <p class="quote-text">
+          AI不是魔法，它是一位<em>永不疲倦、读过海量书籍</em>的助教——<br>
+          您说什么它都能帮上忙，但您要告诉它您要什么。
+        </p>
+        <div class="quote-attr">就像一位全天候在线的私人参谋</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px">
+      <div class="wc fade-up" style="margin:0">
+        <div class="wc-icon">🗣️</div>
+        <h4>对话 AI</h4>
+        <p>像跟朋友聊天一样，您问它答。从天气到健康，从养花到历史，无所不知。</p>
+      </div>
+      <div class="wc fade-up" style="margin:0;transition-delay:.1s">
+        <div class="wc-icon">🎨</div>
+        <h4>创意 AI</h4>
+        <p>输入文字描述就能画图、写诗、编曲，您的生活也能像艺术家一样丰富多彩。</p>
+      </div>
+      <div class="wc fade-up" style="margin:0;transition-delay:.2s">
+        <div class="wc-icon">🔍</div>
+        <h4>分析 AI</h4>
+        <p>比搜索引擎更聪明，能帮您快速整理新闻、对比产品价格、解读医保政策变化。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== SECTION 3: 为什么学AI ======== -->
+<section id="why-learn" style="padding: 0">
+  <div class="band-dark">
+    <div class="container">
+      <div class="section-eyebrow fade-up">为什么要学</div>
+      <h2 class="section-title fade-up" style="color:white;max-width:680px">
+        学AI不等于当程序员
+      </h2>
+      <p class="section-sub fade-up" style="margin-top:14px;max-width:480px">
+        它是帮您生活更方便的工具。年纪从来不是距离。
+      </p>
+    </div>
+  </div>
+  <div style="background:var(--dark);padding-bottom:120px">
+    <div class="container">
+      <div class="product-row">
+        <div class="product-text fade-up">
+          <span class="product-tag">每天10分钟</span>
+          <h3>不用学编程<br>随时随地就可以开始</h3>
+          <p>跟AI对话就像跟孩子聊天。不会打字？说话也行。手抖不想按？大声说"帮我查个天气"就行。</p>
+        </div>
+        <div class="product-visual fade-up" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)">🎯</div>
+      </div>
+      <div class="product-row">
+        <div class="product-visual fade-up" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);order:2">💪</div>
+        <div class="product-text fade-up" style="order:1">
+          <span class="product-tag">大脑锻炼</span>
+          <h3>学新东西<br>本身就是最好的健脑操</h3>
+          <p>研究证明，老年人学习新技能能显著延缓认知衰退。AI既是工具，也是给大脑的健身房。</p>
+        </div>
+      </div>
+      <div class="product-row">
+        <div class="product-text fade-up">
+          <span class="product-tag">全家受益</span>
+          <h3>AI让您和子女<br>有了共同话题</h3>
+          <p>当您主动跟孩子聊起AI时，话题变了。不再是"照顾好自己"，而是"您看我用AI做了什么有趣的事"。</p>
+        </div>
+        <div class="product-visual fade-up" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07)">🏠</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== SECTION 4: 安全须知 ======== -->
+<section class="precautions" id="safety">
+  <div class="container">
+    <div class="prec-header">
+      <div class="section-eyebrow fade-up">先学会保护自己</div>
+      <h2 class="section-title fade-up">用好AI<br>别让坏人钻空子</h2>
+      <p class="section-sub fade-up">AI是工具，骗子也在用同样的技术。知道AI能做什么，才知道怎么防。</p>
+    </div>
+
+    <!-- Red warning -->
+    <div style="background:#2C0C08;color:white;border-radius:var(--radius);padding:36px 40px;margin-top:52px" class="fade-up">
+      <div style="display:flex;gap:20px;align-items:flex-start">
+        <div style="font-size:36px;flex-shrink:0">🚨</div>
+        <div>
+          <h3 style="font-size:22px;font-weight:700;margin-bottom:10px;font-family:'Noto Serif SC',serif">最新骗局：AI冒充"子女""警察"要钱的</h3>
+          <p style="font-size:16px;color:rgba(255,255,255,.7);line-height:1.8;font-weight:300">
+            不法分子利用 AI 声音克隆、AI换脸视频冒充您的亲人或自称警察、客服，说出正确家庭信息后要求您
+            "转保密资金""交保证金""点链接验证身份"。记住：<strong style="color:white">凡是让您转账、打款、点链接、给验证码的，一律要当面或者打电话确认。</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-cards" style="margin-top:36px">
+      <div class="wc fade-up">
+        <div class="wc-icon">🔒</div>
+        <h4>守住几条红线</h4>
+        <p>
+          验证码是最高机密，任何人要都给不得，包括"儿子出事"的情况（先挂断回拨确认）。<br><br>
+          银行卡号和密码永远不跟AI提及。<br><br>
+          遇到"下载APP赚大钱""AI炒股稳赚""AI算命改运"立即关掉——全都是骗局。<br><br>
+          大事一定要和子女商量，不要独自做决定。
+        </p>
+      </div>
+      <div class="wc fade-up" style="transition-delay:.1s">
+        <div class="wc-icon">✅</div>
+        <h4>这些完全可以放心用</h4>
+        <p>
+          用AI查天气、查药价、查公交时间，纯信息服务，零风险。<br><br>
+          让AI帮你翻译菜谱、解释体检报告，作为参考，不做最终决策。<br><br>
+          让AI帮你修复照片、写家书、做旅行计划，纯娱乐和实用，不涉及钱。<br><br>
+          AI聊天解闷养老，一个能24小时在线的朋友。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== SECTION 5: How to Start ======== -->
+<section class="timeline" id="how-start">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:72px">
+      <div class="section-eyebrow fade-up">一步一个脚印</div>
+      <h2 class="section-title fade-up">今天就可以开始</h2>
+      <p class="section-sub fade-up" style="margin:16px auto 0;max-width:440px">不需要懂英语，不需要会用电脑，一部手机就ok。</p>
+    </div>
+
+    <div class="tl-wrap">
+
+      <div class="tl-item fade-up">
+        <div class="tl-dot"></div>
+        <div style="display:flex;align-items:baseline;gap:20px;flex-wrap:wrap">
+          <span class="tl-num">01</span>
+        </div>
+        <h3>打开您的手机</h3>
+        <p>智能手机就是您通往AI世界的入口。打开微信/浏览器/应用商店——这里很多AI工具都需要安装一个小APP，楼下手机店的老板也可以帮您装。遇到问题，求助于身边的人，不丢人。</p>
+      </div>
+
+      <div class="tl-item fade-up" style="transition-delay:.1s">
+        <div class="tl-dot"></div>
+        <div class="tl-num">02</div>
+        <h3>下载一个AI助手APP</h3>
+        <p>推荐从 <strong>文心一言</strong> 或 <strong>豆包</strong> 开始，它们都是免费的。在应用商店搜索名字，按下"安装"即可，跟装微信一样简单。</p>
+      </div>
+
+      <div class="tl-item fade-up" style="transition-delay:.2s">
+        <div class="tl-dot"></div>
+        <div class="tl-num">03</div>
+        <h3>说一句话试试看</h3>
+        <p>装上之后，在输入框打或说：<em>"你好，请帮我介绍一下你自己"</em>——您会惊讶于它的回答多么像一个人在跟您聊天。接下来您可以问任何问题。</p>
+      </div>
+
+      <div class="tl-item fade-up" style="transition-delay:.3s">
+        <div class="tl-dot"></div>
+        <div class="tl-num">04</div>
+        <h3>让它帮您做第一件小事</h3>
+        <p>试试发它一张旧照片的电子版，说"帮我修一修"；或者输入菜名，说"帮我查一个适合高血压的菜谱"。每一次成功的体验，都是您对AI信心的积累。</p>
+      </div>
+
+      <div class="tl-item fade-up" style="transition-delay:.4s">
+        <div class="tl-dot"></div>
+        <div class="tl-num">05</div>
+        <h3>和家人分享您的第一个成果</h3>
+        <p>把AI修好的照片分享到家庭群，把AI旅游计划发给孩子看。最有成就感的事，就是看到身边的人从"怀疑→惊讶→支持"。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======== SECTION 6: Recommended Tools ======== -->
+<section style="padding:120px 0;background:var(--light-band);border-top:1px solid rgba(0,0,0,.04)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:56px">
+      <div class="section-eyebrow fade-up">循序渐进</div>
+      <h2 class="section-title fade-up">推荐入门工具</h2>
+      <p class="section-sub fade-up" style="margin:12px auto 0">选一个您觉得好操作的，从今天开始。</p>
+    </div>
+
+    <div class="product-row fade-up">
+      <div class="product-text">
+        <span class="bento-tag" style="background:rgba(204,78,60,.1);color:var(--accent-warm)">中文友好 · 免费</span>
+        <h3>文心一言</h3>
+        <p>百度出品，中文世界数据最丰富的AI对话工具。会用微信就能上手。最推荐给完全零基础的老人——<em>先跟它聊十分钟</em>。</p>
+      </div>
+      <div class="product-visual" style="font-size:70px;background:linear-gradient(160deg,#fbeae4,#f0c4b0)">🤖</div>
+    </div>
+
+    <div class="product-row fade-up">
+      <div class="product-visual" style="font-size:70px;background:linear-gradient(160deg,#e8f4ea,#b8e0c4);order:2">🎙️</div>
+      <div class="product-text" style="order:1">
+        <span class="bento-tag" style="background:rgba(61,122,74,.1);color:var(--accent-green)">语音对话 · 最轻松</span>
+        <h3>AI豆包</h3>
+        <p>不用打字，<em>开口说话</em>就能跟它对话。问菜谱、查天气、翻译菜单、找路口，全程语音完成，
+          对手指不灵活、视力不好的老人特别友好。</p>
+      </div>
+    </div>
+
+    <div class="product-row fade-up">
+      <div class="product-text">
+        <span class="bento-tag" style="background:rgba(201,168,76,.15);color:#8B6914">老照片修复 · 情感价值</span>
+        <h3>AI老照片修复</h3>
+        <p>用"老照片修复""黑白照片上色"等AI在线工具，上传泛黄的照片，几分钟就能得到高清彩色版。将它发给牵挂的人，<em>这就是AI给亲情最好的礼物</em>。</p>
+      </div>
+      <div class="product-visual" style="font-size:70px;background:linear-gradient(160deg,#fdf3dc,#f0d9a0)">🏞️</div>
+    </div>
+
+    <div class="product-row fade-up">
+      <div class="product-visual" style="font-size:70px;background:linear-gradient(160deg,#eaeff7,#b8d0f0);order:2">🎵</div>
+      <div class="product-text" style="order:1">
+        <span class="bento-tag" style="background:rgba(56,120,200,.1);color:#3878C8">乐趣 · 免费创作</span>
+        <h3>AI唱歌 / AI作曲</h3>
+        <p>用 Suno 等工具，输入"帮我写一首怀念童年大院的歌，用老歌的调子"，几十秒后一段专属于您的音乐就诞生了。可以分享到家庭群，一辈子可能都没人给您写过歌。</p>
+      </div>
+    </div>
+
+    <div class="product-row fade-up">
+      <div class="product-text">
+        <span class="bento-tag" style="background:rgba(150,150,150,.1);color:var(--muted)">出游 · 量身定制</span>
+        <h3>AI旅行规划师</h3>
+        <p>告诉AI您的目的地、出行人数、预算和特殊需求（比如需要台阶少的路线），它就会为您生成一份<em>包含食宿景点、交通方式和注意事项</em>的完整行程，精确到每天几点起床比较科学。</p>
+      </div>
+      <div class="product-visual" style="font-size:70px;background:linear-gradient(160deg,#f0efec,#ddd4c8)">🧳</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======== SECTION 7: AI入门基础教程 ======== -->
+<section id="tutorial1" style="padding:120px 0 0;background:var(--cream)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:64px">
+      <div class="section-eyebrow fade-up">手把手教您</div>
+      <h2 class="section-title fade-up">AI入门必学的<br>5个实用教程</h2>
+      <p class="section-sub fade-up" style="margin:14px auto 0">每个教程只说一件事，照着做就能学会。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Tutorial 1: Photo Restoration -->
+<div style="background:white;padding:80px 0">
+  <div class="container">
+    <div class="product-row fade-up" style="align-items:flex-start">
+      <div style="font-size:80px;text-align:center;padding-top:16px">🖼️</div>
+      <div>
+        <span class="bento-tag" style="background:rgba(204,78,60,.1);color:var(--accent-warm);margin-bottom:16px;display:inline-block">基础教程 · 第一步</span>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:20px">用AI修复一张<span style="color:var(--accent-warm)">老照片</span></h3>
+        <div style="font-size:15px;color:var(--dark-soft);line-height:2.2;max-width:560px">
+          <p><strong>① 准备照片</strong> — 找到您的旧照片，用手机拍下来保存在相册里。</p>
+          <p><strong>② 打开AI修复工具</strong> — 在微信里搜索"老照片修复"小程序，或在应用商店下载（如"醒图""美图秀秀"都有修复功能）。</p>
+          <p><strong>③ 上传照片</strong> — 点击"上传"或"拍照"，选好照片后拖入框里。</p>
+          <p><strong>④ 一键修复</strong> — 多数工具默认自动处理，等待10秒到1分钟。</p>
+          <p><strong>⑤ 保存分享</strong> — 点"保存"到相册，再发给子女和亲友，记得告诉他们这是用AI修的哦！</p>
+          <p style="margin-top:16px;padding:16px 20px;background:var(--gold-soft);border-radius:12px;border-left:4px solid var(--gold)">
+            💡 进阶玩法：再试试"黑白上色""模糊变清晰""把单人照变成全家福"等效果。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tutorial 2: AI Recipe -->
+<div style="background:var(--cream);padding:80px 0;border-top:1px solid rgba(0,0,0,.04)">
+  <div class="container">
+    <div class="product-row fade-up" style="align-items:flex-start;direction:rtl">
+      <div style="direction:ltr;font-size:80px;text-align:center;padding-top:16px">🍳</div>
+      <div style="direction:ltr">
+        <span class="bento-tag" style="background:rgba(61,122,74,.1);color:var(--accent-green);margin-bottom:16px;display:inline-block">基础教程 · 第二步</span>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:20px">用AI定制您的<span style="color:var(--accent-green)">专属菜谱</span></h3>
+        <div style="font-size:15px;color:var(--dark-soft);line-height:2.2;max-width:560px">
+          <p><strong>第一步：打开AI助手</strong> — 打开文心一言、豆包或DeepSeek的APP。</p>
+          <p><strong>第二步：开口说</strong> — 试试这样说：<em>"我有高血压，今天的菜有猪排骨、冬瓜、番茄、香菇，请帮我搭配一个适合的三道菜，要求少盐少油。"</em></p>
+          <p><strong>第三步：让AI列出做法</strong> — 继续说：<em>"请把做法一步一步写清楚，适合我这种手上有点慢操作的老人。"</em></p>
+          <p><strong>第四步：还能追问</strong> — "这几个菜的盐量各放多少？""你好，我知道糖尿病不能吃甜，这个菜谱糖量多少？"AI会逐个回答您。</p>
+          <p style="margin-top:16px;padding:16px 20px;background:var(--green-soft);border-radius:12px;border-left:4px solid var(--green)">
+            💡 进阶玩法：每周备菜时把冰箱里的食材告诉AI，让它"看着安排"一周菜谱，省心省力。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tutorial 3: Health Report -->
+<div style="background:white;padding:80px 0">
+  <div class="container">
+    <div class="product-row fade-up" style="align-items:flex-start">
+      <div style="font-size:80px;text-align:center;padding-top:16px">💊</div>
+      <div>
+        <span class="bento-tag" style="background:rgba(56,120,200,.1);color:#3878C8;margin-bottom:16px;display:inline-block">基础教程 · 第三步</span>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:20px">用AI读懂您的<span style="color:#3878C8">体检报告</span></h3>
+        <div style="font-size:15px;color:var(--dark-soft);line-height:2.2;max-width:560px">
+          <p><strong>第一步：拍好报告</strong> — 用手机把体检报告拍清楚，光线充足一些，文字越清晰越好。</p>
+          <p><strong>第二步：打开AI对话</strong> — 打开豆包或文心一言，点"+"添加一张图片。</p>
+          <p><strong>第三步：这样提问</strong> — 复制这句话直接发：<br><em>"请帮我逐条解读这份体检报告，用大白话告诉我每项指标代表什么，哪些指标需要关注，给点生活建议。我不懂医学术语，请尽量简单。"</em></p>
+          <p><strong>第四步：继续深入问</strong> — "这个指标偏高，我应该吃什么？""我平时要注意什么？""多久复查一次比较合适？"</p>
+          <p style="margin-top:16px;padding:16px 20px;background:var(--blue-soft);border-radius:12px;border-left:4px solid var(--blue)">
+            ⚠️ 注意：AI给的是参考解读，诊断和治疗方案一定要找医生确认，不要自行服药。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tutorial 4: Tourist Planning -->
+<div style="background:var(--light-band);padding:80px 0;border-top:1px solid rgba(0,0,0,.04)">
+  <div class="container">
+    <div class="product-row fade-up" style="align-items:flex-start;direction:rtl">
+      <div style="direction:ltr;font-size:80px;text-align:center;padding-top:16px">✈️</div>
+      <div style="direction:ltr">
+        <span class="bento-tag" style="background:rgba(201,168,76,.15);color:#8B6914;margin-bottom:16px;display:inline-block">基础教程 · 第四步</span>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:20px">用AI制定<span style="color:#8B6914">出行旅行计划</span></h3>
+        <div style="font-size:15px;color:var(--dark-soft);line-height:2.2;max-width:560px">
+          <p><strong>第一步：告诉AI您想去哪</strong> — 打开AI助手，用文字或语音这样问：</p>
+          <p style="padding:16px 20px;background:white;border-radius:12px;margin:12px 0;border-left:4px solid var(--gold);color:var(--text-sec);font-size:16px">
+            "我今年68岁，打算这个月下周四出发，去杭州玩3天，和老伴一起去。腿脚没问题但走了会累。帮我做一份详细行程，包括每天几点建议出发、主要景点、推荐的餐馆（口味清淡）、住宿要求，内急方便的地方也要标出来。预算是每人2000元左右。"
+          </p>
+          <p><strong>第二步：AI会给您一份完整的旅行方案</strong>，包含每天的行程、景点推荐、交通方式、住宿建议。</p>
+          <p><strong>第三步：不满意就追问</strong> — "换一天走，景点太多了""这家饭店环境好不好？有没有台阶少的路线？"随时调整。</p>
+          <p style="margin-top:16px;padding:16px 20px;background:var(--gold-soft);border-radius:12px;border-left:4px solid var(--gold)">
+            💡 进阶玩法：让AI帮您生成出发前的"查天气""查地铁时间表""查找路线的无障碍设施"等实用信息卡片。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tutorial 5: Voice Translation -->
+<div style="background:white;padding:80px 0 120px">
+  <div class="container">
+    <div class="product-row fade-up" style="align-items:flex-start">
+      <div style="font-size:80px;text-align:center;padding-top:16px">🌍</div>
+      <div>
+        <span class="bento-tag" style="background:rgba(150,150,150,.1);color:var(--muted);margin-bottom:16px;display:inline-block">基础教程 · 第五步</span>
+        <h3 style="font-family:'Noto Serif SC',serif;font-size:28px;font-weight:700;line-height:1.3;margin-bottom:20px">用AI当您的<span style="color:var(--muted)">随身翻译</span></h3>
+        <div style="font-size:15px;color:var(--dark-soft);line-height:2.2;max-width:560px">
+          <p><strong>第一种方式：用翻译APP拍照翻译</strong> — 下载"有道翻译"或"讯飞翻译"APP，对着外文菜单、路牌、药品说明书拍照，AI立刻翻译成中文。</p>
+          <p><strong>第二种方式：去国外旅行时实时对话</strong> — 下载"Google翻译"APP，开启"对话模式"，对着手机说中文，AI自动翻成外语读出来；老外说话，AI翻成中文读给您听。</p>
+          <p><strong>第三种方式：用AI助手翻译文字</strong> — 打开文心一言/豆包，直接发一段外文，说"请翻译成中文，用口语表达"。</p>
+          <p style="margin-top:16px;padding:16px 20px;background:var(--bg-warm);border-radius:12px;border-left:4px solid var(--accent)">
+            💡 旅行前可以请AI帮您"列一张国外旅行常用英语短句清单"——这比到处翻书快多了。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== SECTION 8: FAQ ======== -->
+<section class="faq-section" id="faq">
+
+  <div class="container">
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="section-eyebrow fade-up">心里有惑</div>
+      <h2 class="section-title fade-up">常见问题</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item fade-up">
+        <div class="faq-q">AI会不会把我聊天内容告诉别人？</div>
+        <div class="faq-a"><p>正规AI会保护您的隐私，但<strong>不要跟AI说银行卡密码、身份证号</strong>这些核心信息。凡是要掏钱的对话内容一概不告诉AI。记住——您不让AI知道的事，它就不会说出去。</p></div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">我70岁了，还能学会吗？</div>
+        <div class="faq-a"><p>完全可以。您已经学会了用微信、用健康码、用打车软件——AI跟它们一样，<em>只是一个新工具</em>。而且AI最大的价值就是让技术"傻瓜化"——跟它说话就行，您的能力一点不比年轻人差。</p></div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">AI说的一定是对的吗？</div>
+        <div class="faq-a"><p>不一定。AI偶尔会"一本正经地胡说八道"（业内叫幻觉）。所以<strong>吃药剂量、就医建议、投资决策</strong>——这些重大问题，还是要找医生、子女、专业机构确认。AI帮您做参考，不做最终裁判。</p></div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">AI要花很多钱吗？</div>
+        <div class="faq-a"><p>大部分好用的AI工具对普通用户都是<strong>免费的</strong>：文心一言、豆包、DeepSeek、讯飞星火都有免费版，足够日常使用。即使是Suno、Midjourney这些著名工具，也有很多免费额度在等着您。先免费试，喜欢再考虑付费。</p></div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">AI会帮我投资赚钱吗？</div>
+        <div class="faq-a"><p><strong>不会。</strong>AI能帮您分析公开的新闻和政策解读，但<em>没有任何AI能保证帮您赚钱</em>。凡是推荐您"用AI炒股""AI理财""AI投资"的都是骗局——直接关掉，不必犹豫。</p></div>
+      </div>
+      <div class="faq-item fade-up">
+        <div class="faq-q">子女不在身边，没人教我怎么办？</div>
+        <div class="faq-a"><p>社区、老年大学、图书馆经常有免费的"智能手机+AI使用"公益课程。也可以通过视频通话<em>让远方的子女远程教您</em>，花15分钟，足够上手一个功能。不想麻烦孩子就自己探索：装好AI，开头一句"请你教我，我不会操作"——AI会一步步引导您。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== CLOSING ======== -->
+<section style="padding:140px 0 120px;text-align:center;background:var(--cream)">
+  <div class="container">
+    <div class="fade-up">
+      <p style="font-size:14px;font-weight:600;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:28px">Last Word</p>
+      <h2 style="font-family:'Noto Serif SC',serif;font-size:clamp(36px,5vw,60px);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:28px">
+        科技不会等任何人<br>但<em style="color:var(--accent-warm);font-style:normal">您也不需要追赶</em>
+      </h2>
+      <p style="font-size:19px;color:var(--dark-soft);font-weight:300;max-width:520px;margin:0 auto">
+        今天，就问AI一个问题。<br>
+       哪怕只是简单的 "今天适合出门散步吗？"——这就是开始。
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>AI在身边 · 老年人科技生活指南</strong></p>
+  <p style="margin-top:6px">让科技温暖每一个晚年 · 内容仅供参考 · AI 日新月异，保持开放性心态最重要</p>
+</footer>
+
+<script>
+// Intersection Observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Sticky nav
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('.nav');
+  nav.style.background = scrollY > 60
+    ? 'rgba(245,245,240,.92)'
+    : 'rgba(245,245,240,.72)';
+});
+
+// FAQ toggle
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+  });
+});
+
+// Smooth scroll
+document.querySelectorAll('.nav-inner a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(link.getAttribute('href'));
+
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
